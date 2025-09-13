@@ -42,5 +42,43 @@ Node* insertEnd(Node* head, int key)
 float interQuartile(Node* head)
 {
     //code here
-    return 0.0;   
+    Node* first = head;
+    Node* second = head->next;
+    Node* third = head->next->next;
+    Node* fourth = head->next->next->next;
+    int count = 4;
+    while (fourth != nullptr && fourth->next != nullptr && fourth->next->next != nullptr && fourth->next->next->next != nullptr && fourth->next->next->next->next != nullptr){
+        first = first->next;
+        second = second->next->next;
+        third = third->next->next->next;
+        fourth = fourth->next->next->next->next;
+        count += 4;
+    }
+    while(fourth != nullptr){
+      count += 1;
+      fourth = fourth->next;
+    }
+  count -= 1;
+  float quarter3, quarter1; 
+  if(count % 2 != 0){
+    int div = (count - 1) / 2;
+    if(div % 2 == 0){
+      quarter1 = first->value / 2.0 + first->next->value / 2.0;
+      quarter3 = third->next->value/ 2.0 + third->next->next->value / 2.0;
+    }else{
+    quarter3 = third->next->next->next->value;
+    quarter1 = first->next->value;
+    }
+  }else{
+    int div = count / 2;
+    if(div % 2 == 0){
+      quarter1 = first->value / 2.0 + first->next->value / 2.0;
+      quarter3 = third->value / 2.0 + third->next->value / 2.0;
+    }
+    else{
+      quarter1 = first->next->value;
+      quarter3 = third->next->next->value;
+    }
+  }
+    return quarter3 - quarter1;   
 }
